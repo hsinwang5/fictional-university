@@ -2,19 +2,15 @@
 get_header();
 
 while (have_posts()) {
-  the_post(); ?>
+  the_post();
+  pageBanner(array(
+    //'title' => 'Hello, this is the title',
+    //'subtitle' => 'Hi, this is the subtitle',
+    //'photo' => 'https://images.unsplash.com/photo-1541103566371-1a77ffd62e05?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c3915520661333b5b5bc097686629433&auto=format&fit=crop&w=600&q=60'
+  )); ?>
 
-  <div class="page-banner">
-    <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg') ?>);"></div>
-    <div class="page-banner__content container container--narrow">
-      <h1 class="page-banner__title"><?php the_title(); ?></h1>
-      <div class="page-banner__intro">
-        <p>Dont forget to replace me later!!!!</p>
-      </div>
-    </div>  
-  </div>
 
-  <div class="container container--narrow page-section">
+<div class="container container--narrow page-section">
 
   <?php
 
@@ -23,31 +19,35 @@ while (have_posts()) {
 
   if ($theParent) {
     ?>
-       <div class="metabox metabox--position-up metabox--with-home-link">
-      <p><a class="metabox__blog-home-link" href="<?php echo get_permalink($theParent); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($theParent); ?></a> <span class="metabox__main"><?php the_title(); ?></span></p>
-    </div>
-    <?php 
-  }
+  <div class="metabox metabox--position-up metabox--with-home-link">
+    <p><a class="metabox__blog-home-link" href="<?php echo get_permalink($theParent); ?>"><i
+          class="fa fa-home" aria-hidden="true"></i> Back to
+        <?php echo get_the_title($theParent); ?></a> <span class="metabox__main">
+        <?php the_title(); ?></span></p>
+  </div>
+  <?php 
+}
 
-  ?>
+?>
 
-   
-   <?php 
+
+  <?php 
   $testArray = get_pages(array(
     'child_of' => get_the_ID()
   ));
   if ($theParent or $testArray) {
     ?>
-    <div class="page-links">
-      <h2 class="page-links__title"><a href="<?php echo get_permalink($theParent); ?>"><?php echo get_the_title($theParent); ?></a></h2>
-      <ul class="min-list">
-        <?php 
+  <div class="page-links">
+    <h2 class="page-links__title"><a href="<?php echo get_permalink($theParent); ?>">
+        <?php echo get_the_title($theParent); ?></a></h2>
+    <ul class="min-list">
+      <?php 
 
-        if ($theParent) {
-          $findChildrenOf = $theParent;
-        } else {
-          $findChildrenOf = get_the_ID();
-        }
+      if ($theParent) {
+        $findChildrenOf = $theParent;
+      } else {
+        $findChildrenOf = get_the_ID();
+      }
         // $animalSounds = array(
         //   'cat' => 'meow',
         //   'dog' => 'bark',
@@ -56,24 +56,24 @@ while (have_posts()) {
 
         // echo $animalSounds['dog'];
 
-        wp_list_pages(array(
-          'title_li' => null,
-          'child_of' => $findChildrenOf,
-          'sort_column' => 'menu_order'
-        ));
-        ?>
-      </ul>
-    </div>
+      wp_list_pages(array(
+        'title_li' => null,
+        'child_of' => $findChildrenOf,
+        'sort_column' => 'menu_order'
+      ));
+      ?>
+    </ul>
+  </div>
 
-<?php 
+  <?php 
 } ?>
 
-    <div class="generic-content">
-      <?php the_content(); ?>
-    </div>
-
+  <div class="generic-content">
+    <?php the_content(); ?>
   </div>
-  <?php 
+
+</div>
+<?php 
 }
 
 get_footer();
